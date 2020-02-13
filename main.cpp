@@ -20,9 +20,9 @@ void addContact(vector<Adresat> &adresaci, int idZalogowanegoUzytkownika, int il
     Adresat adresat;
     system("cls");
     if (adresaci.empty()) {
-        adresat.id = adresaci.size();
+        adresat.id = 0;
     } else {
-        adresat.id = iloscUzytkownikow;
+        adresat.id = adresaci[adresaci.size()-1].id+1;
     }
     adresat.userId=idZalogowanegoUzytkownika;
     cout<< "Podaj imie: ";
@@ -109,8 +109,10 @@ int logowanie(vector <Uzytkownik> &uzytkownicy) {
         }
         i++;
     }
+
     cout<<" Nie ma uzytkownika z takim loginem."<<endl;
     Sleep(1500);
+    return userId==0;
 }
 void zmianaHasla(vector <Uzytkownik> &uzytkownicy,int idZalogowanegoUzytkownika) {
     string haslo;
