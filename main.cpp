@@ -17,14 +17,20 @@ struct Adresat {
 
 void addContact(vector<Adresat> &adresaci, int idZalogowanegoUzytkownika, int iloscUzytkownikow) {
     string name, surname, phone, email, address;
+    vector<string> daneOsobowe;
     Adresat adresat;
-    system("cls");
-    if (adresaci.empty()) {
-        adresat.id = 0;
-    } else {
-        adresat.id = adresaci[adresaci.size()-1].id+1;
+    fstream lista;
+    string linia;
+    lista.open("KsiazkaAdresow.txt", ios::in);
+    while(getline(lista, linia)) {
+        daneOsobowe.push_back(linia);
     }
+    adresat.id = daneOsobowe.size();
+    daneOsobowe.clear();
+    lista.close();
+    system("cls");
     adresat.userId=idZalogowanegoUzytkownika;
+    cout<< "ostatni numer w wektorze "<< adresaci.size() <<endl;
     cout<< "Podaj imie: ";
     cin>>name;
     adresat.name=name;
@@ -42,7 +48,6 @@ void addContact(vector<Adresat> &adresaci, int idZalogowanegoUzytkownika, int il
     getline(cin, address);
     adresat.address=address;
     adresaci.push_back (adresat);
-    fstream lista;
     lista.open("KsiazkaAdresow.txt",ios::out | ios::app);
     lista << adresat.id << "|";
     lista << adresat.userId << "|";
@@ -517,6 +522,7 @@ int main() {
         cout << "7. Zmien haslo." << endl;
         cout << "9. Wyloguj sie." << endl;
         cout << "Twoj wybor:" << endl;
+        cout << "ilosc uzytkownikow" <<iloscUzytkownikow<< endl;
         cin >> wybor2;
         if (wybor2=='1') {
             addContact(adresaci, idZalogowanegoUzytkownika, iloscUzytkownikow);
